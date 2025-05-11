@@ -1,8 +1,4 @@
-"use client";
-
 import H1 from "@/components/h1";
-import { usePathname } from "next/navigation";
-import React from "react";
 
 type EventsPageProps = {
   params: {
@@ -10,9 +6,16 @@ type EventsPageProps = {
   };
 };
 
-export default function EventsPage({ params }: EventsPageProps) {
-  const pathName = usePathname();
+export default async function EventsPage({ params }: EventsPageProps) {
   const city = params.city;
+
+  const response = await fetch(
+    "https://bytegrad.com/course-assets/projects/evento/api/events?city=austin"
+  );
+
+  const events = await response.json();
+  console.log(events);
+
   return (
     <main className="flex flex-col items-center py-24 px-[20px] min-h-[100vh]">
       {city === "all" ? (
@@ -20,6 +23,9 @@ export default function EventsPage({ params }: EventsPageProps) {
       ) : (
         <H1>Event in {city.charAt(0).toUpperCase() + city.slice(1)}</H1>
       )}
+      {events.map((event) => (
+        <section key={event.key}>{event.name}</section>
+      ))}
     </main>
   );
 }
