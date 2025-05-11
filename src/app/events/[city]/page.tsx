@@ -1,4 +1,5 @@
 import H1 from "@/components/h1";
+import { EventoEvent } from "@/lib/type";
 
 type EventsPageProps = {
   params: {
@@ -13,7 +14,7 @@ export default async function EventsPage({ params }: EventsPageProps) {
     "https://bytegrad.com/course-assets/projects/evento/api/events?city=austin"
   );
 
-  const events = await response.json();
+  const events: EventoEvent[] = await response.json();
   console.log(events);
 
   return (
@@ -24,7 +25,7 @@ export default async function EventsPage({ params }: EventsPageProps) {
         <H1>Event in {city.charAt(0).toUpperCase() + city.slice(1)}</H1>
       )}
       {events.map((event) => (
-        <section key={event.key}>{event.name}</section>
+        <section key={event.id}>{event.name}</section>
       ))}
     </main>
   );
