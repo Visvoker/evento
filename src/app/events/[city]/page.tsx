@@ -16,7 +16,6 @@ export default async function EventsPage({ params }: EventsPageProps) {
   );
 
   const events: EventoEvent[] = await response.json();
-  console.log(events);
 
   return (
     <main className="flex flex-col items-center py-24 px-[20px] min-h-[100vh]">
