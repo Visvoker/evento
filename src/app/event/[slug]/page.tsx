@@ -1,7 +1,42 @@
-import React from 'react'
+import Image from "next/image";
 
-export default function EventPage() {
+type EventPageProps = {
+  params: {
+    slug: string;
+  };
+};
+
+export default async function EventPage({ params }: EventPageProps) {
+  const slug = params.slug;
+  const response = await fetch(
+    `https://bytegrad.com/course-assets/projects/evento/api/events/${slug}`
+  );
+  const event = await response.json();
+
   return (
-    <div>EventPage</div>
-  )
+    <main>
+      <section className="relative h-[361px] overflow-hidden">
+        <Image
+          src={event.imageUrl}
+          className="object-cover blur-3xl"
+          alt="Event background image"
+          fill
+          quality={50}
+          sizes="(max-width:1280px) 100vw, 1280px"
+        />
+
+        <div>
+          <Image
+            className="z-1 relative"
+            src={event.imageUrl}
+            alt={event.name}
+            width={300}
+            height={201}
+          />
+        </div>
+      </section>
+
+      <div></div>
+    </main>
+  );
 }
