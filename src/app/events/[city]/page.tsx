@@ -3,14 +3,24 @@ import H1 from "@/components/h1";
 
 import { Suspense } from "react";
 import Loading from "./loading";
+import { capitalize } from "@/lib/utils";
+import { Metadata } from "next";
 
-type EventsPageProps = {
+type Props = {
   params: {
     city: string;
   };
 };
 
-export default async function EventsPage({ params }: EventsPageProps) {
+export function generateMetadata({ params }: Props): Metadata {
+  const city = params.city;
+
+  return {
+    title: city === "all" ? "All Events" : `Events in ${capitalize(city)}`,
+  };
+}
+
+export default async function EventsPage({ params }: Props) {
   const city = params.city;
 
   return (
@@ -18,9 +28,7 @@ export default async function EventsPage({ params }: EventsPageProps) {
       {city === "all" ? (
         <H1 className="mb-28">All Events</H1>
       ) : (
-        <H1 className="mb-28">
-          Event in {city.charAt(0).toUpperCase() + city.slice(1)}
-        </H1>
+        <H1 className="mb-28">Event in {capitalize(city)}</H1>
       )}
       <Suspense fallback={<Loading />}>
         <EventsList city={city} />
