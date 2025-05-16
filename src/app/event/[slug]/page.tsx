@@ -1,8 +1,7 @@
 import H1 from "@/components/h1";
-import { capitalize, getEvent } from "@/lib/utils";
+import { getEvent } from "@/lib/utils";
 import { Metadata } from "next";
 import Image from "next/image";
-import { Children } from "react";
 
 type Props = {
   params: {
@@ -17,6 +16,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: event.name,
   };
+}
+
+export async function generateStaticParams() {
+  return [
+    {
+      slug: "comedy-extravaganza",
+    },
+    {
+      slug: "dj-practice-session",
+    },
+  ];
 }
 
 export default async function EventPage({ params }: Props) {
