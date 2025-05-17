@@ -24,7 +24,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-
 export async function generateStaticParams() {
   // top 100 most popular events
   return [
@@ -40,6 +39,10 @@ export async function generateStaticParams() {
 export default async function EventPage({ params }: Props) {
   const slug = params.slug;
   const event = await getEvent(slug);
+
+  if (!event) {
+    return <div className="text-center py-20 text-xl">Event not found</div>;
+  }
 
   return (
     <main>
