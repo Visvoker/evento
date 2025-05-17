@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import H1 from "@/components/h1";
 import { getEvent } from "@/lib/server-utils";
 import { Metadata } from "next";
